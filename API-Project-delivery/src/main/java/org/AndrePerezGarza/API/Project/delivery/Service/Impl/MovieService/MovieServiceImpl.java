@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+// This class is used to create of the business logic
 @Slf4j
 @Service
 public class MovieServiceImpl implements MovieService {

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 
+// This class is used to create a Movie DTO object that the controller will handle
 @Data
 public class MovieDTO {
 
