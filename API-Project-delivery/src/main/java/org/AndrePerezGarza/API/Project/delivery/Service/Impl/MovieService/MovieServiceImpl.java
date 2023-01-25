@@ -96,7 +96,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public String getLink(String name)  {
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=<Api Key>d8&language=en-US&query=" + name + "&page=1&include_adult=false");
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=46e0f418a29d6a20970c5608a37047d8&language=en-US&query=" + name + "&page=1&include_adult=false");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -149,7 +149,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public String getName(String name) {
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=<Api Key>d8&language=en-US&query=" + name + "&page=1&include_adult=false");
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=46e0f418a29d6a20970c5608a37047d8&language=en-US&query=" + name + "&page=1&include_adult=false");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -201,7 +201,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public String getYear(String name) {
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=<Api Key>d8&language=en-US&query=" + name + "&page=1&include_adult=false");
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=46e0f418a29d6a20970c5608a37047d8&language=en-US&query=" + name + "&page=1&include_adult=false");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -251,12 +251,66 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public String getOverview(String name) {
+        try {
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=46e0f418a29d6a20970c5608a37047d8&language=en-US&query=" + name + "&page=1&include_adult=false");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            log.info("Connecting with url {} deleted ",url);
+
+            // comprobar petición
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200) {
+                log.warn("Error in the request");
+                throw new RuntimeException("Error has ocurred " + responseCode);
+            } else {
+                //Abrir scaner que lea el flujo
+                log.info("Openning the Scanner");
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationString.append(scanner.nextLine());
+
+                }
+
+                scanner.close();
+
+                //Parse objects
+                log.info("Parsing object");
+                JSONObject jsonObject = new JSONObject(informationString.toString());
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
+                log.info("Getting JSONObject");
+                JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                log.info("Returning overview");
+                String title = jsonObject1.getString("overview");
+                return title;
+
+                //System.out.println(id);
+
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.warn("Error in the request");
+        return "error";
+
+
+    }
+
+
+    @Override
     public List<String> findMovie(String name) {
         List<String> movie = new ArrayList<>();
         log.info("Retrieving {} info", name);
         movie.add("Original title: " + getName(name));
         movie.add("Release Date: " + getYear(name));
         movie.add("Link to vidsrc: " + getLink(name));
+        movie.add("Overview: " + getOverview(name) );
         log.info("Returning {} info", name);
         return movie;
     }
@@ -271,6 +325,7 @@ public class MovieServiceImpl implements MovieService {
         Long varLong=Long.parseLong(years);
         movie.setName(getName(name));
         movie.setYear(varLong);
+        movie.setOverview(getOverview(name));
         log.info("Returning {} info", name);
         log.info("Saving {} info", name);
         repository.save(movie);

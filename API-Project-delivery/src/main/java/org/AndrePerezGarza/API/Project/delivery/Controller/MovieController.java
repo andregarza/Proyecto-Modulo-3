@@ -1,14 +1,17 @@
 package org.AndrePerezGarza.API.Project.delivery.Controller;
 
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.AndrePerezGarza.API.Project.delivery.DTO.MovieDTO;
 import org.AndrePerezGarza.API.Project.delivery.Entity.Movie;
 import org.AndrePerezGarza.API.Project.delivery.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,15 +48,16 @@ public class MovieController {
 
     // Creates a new entry by using the body of the Post request
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public MovieDTO save(@RequestBody MovieDTO data){
+    // @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> save(@Valid @RequestBody MovieDTO data){
         log.info("Posting body {} to repository", data);
-        return movie.save(data);
+        movie.save(data);
+        return ResponseEntity.created(URI.create("")).build();
     }
 
     // Updates an entry searched by the id and uses the body of the request
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+   // @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") long id, @RequestBody MovieDTO data) throws Exception{
         log.info("Updating by id");
        movie.update(id, data);
@@ -68,25 +72,25 @@ public class MovieController {
     }
 
     // Gets the online repository link searched by the name on the link
-    @GetMapping("/getLink{name}")
+    @GetMapping("/getLink/{name}")
     public String getLink(@PathVariable("name") String name){
         log.info("Returning {} movie Link by name", name);
         return movie.getLink(name);
     }
 
     // Gets the Name of the movie from the Movie DB API searched by the name on the link
-    @GetMapping("/get{name}")
+    @GetMapping("/get/{name}")
     public List<String> getMovie(@PathVariable("name") String name){
         log.info("Getting {} info",name);
         return movie.findMovie(name);
     }
 
     // Creates a new entry with the info from the Movie DB API searched by the name on the link
-    @PostMapping("/post{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public void  saveMovie(@PathVariable("name") String name){
+    @PostMapping("{name}")
+    public ResponseEntity<Void>  saveMovie(@PathVariable("name") String name){
         log.info("Saving {} into repository", name);
-         movie.saveFromName(name);
+        movie.saveFromName(name);
+        return ResponseEntity.created(URI.create("")).build();
     }
 
 

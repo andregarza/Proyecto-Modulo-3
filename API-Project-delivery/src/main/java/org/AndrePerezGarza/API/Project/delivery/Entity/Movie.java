@@ -2,6 +2,10 @@ package org.AndrePerezGarza.API.Project.delivery.Entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +33,17 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
     @Column(name = "Movie", nullable = false)
     private String name;
 
     @Column(name = "Year", nullable = false)
     private long year;
+
+    @Column(name = "Overview", nullable = true)
+    private String overview;
+
+
 // Creation stamp is created everytime a new Movie Object is generated
     @CreationTimestamp
     @Temporal(TemporalType.DATE)

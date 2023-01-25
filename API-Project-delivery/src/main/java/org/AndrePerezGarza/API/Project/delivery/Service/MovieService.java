@@ -35,6 +35,8 @@ public interface MovieService {
      // returns the year of the movie based on the input word from the MDB API
      String getYear(String name);
 
+     String getOverview(String name);
+
      // returns the link, the name and the year based on the input word from the MDB API
      List<String> findMovie(String name);
 
