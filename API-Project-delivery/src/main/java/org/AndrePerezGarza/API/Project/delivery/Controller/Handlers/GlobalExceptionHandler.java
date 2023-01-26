@@ -29,8 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             errors.put(error.getObjectName(), error.getDefaultMessage());
         }
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrores(errors);
-        errorResponse.setRuta(request.getDescription(false).substring(4));
+        errorResponse.setErrors(errors);
+        errorResponse.setRoute(request.getDescription(false).substring(4));
         return handleExceptionInternal(
                 ex, errorResponse, headers, HttpStatus.BAD_REQUEST, request);
     }
@@ -50,8 +50,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         errors.put("Error", builder.toString());
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrores(errors);
-        errorResponse.setRuta(request.getDescription(false).substring(4));
+        errorResponse.setErrors(errors);
+        errorResponse.setRoute(request.getDescription(false).substring(4));
 
         return new ResponseEntity<Object>(errorResponse, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -65,8 +65,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         builder.append(" The path variable is missing ");
         errors.put("Error", builder.toString());
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrores(errors);
-        errorResponse.setRuta(request.getDescription(false).substring(4));
+        errorResponse.setErrors(errors);
+        errorResponse.setRoute(request.getDescription(false).substring(4));
 
         return new ResponseEntity<Object>(errorResponse, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }

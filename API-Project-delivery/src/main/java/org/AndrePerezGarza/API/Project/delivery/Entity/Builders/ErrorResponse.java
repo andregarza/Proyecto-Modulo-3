@@ -10,7 +10,7 @@ import java.util.Map;
 public class ErrorResponse {
 
     private final LocalDateTime timestamp = LocalDateTime.now();
-    private int estatus;
-    private Map<String, String> errores;
-    private String ruta;
+    private int status;
+    private Map<String, String> errors;
+    private String route;
 }

@@ -14,11 +14,15 @@ public class UserDetailService {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("Andre")
                 .password(bCryptPasswordEncoder.encode("1234"))
-                .roles("USER")
+                .roles("USER","OWNER")
                 .build());
         manager.createUser(User.withUsername("admin")
                 .password(bCryptPasswordEncoder.encode("admin"))
                 .roles("USER","ADMIN")
+                .build());
+        manager.createUser(User.withUsername("Lizy")
+                .password(bCryptPasswordEncoder.encode("Hola123"))
+                .roles("USER")
                 .build());
         return manager;
     }

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,14 +28,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests().
                 requestMatchers(HttpMethod.DELETE).hasRole("ADMIN").
                 requestMatchers(HttpMethod.GET).permitAll().
-                requestMatchers(HttpMethod.POST).permitAll().
+                requestMatchers(HttpMethod.POST).hasRole("OWNER").
+                requestMatchers(HttpMethod.PUT).hasRole("OWNER").
                 anyRequest().authenticated().
                 and().httpBasic().
                 and().sessionManagement().
-                sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+                .authenticationEntryPoint(new AuthenticationEntryPointHandler()).
+                and().exceptionHandling().accessDeniedHandler(new AccessDeniedHandler());
+                             ;
 
         return http.build();
     }
+
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -44,4 +49,7 @@ public class SecurityConfig {
                 .ignoring()
                 .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico");
     }
+
+
+
 }

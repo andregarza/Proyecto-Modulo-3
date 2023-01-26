@@ -23,25 +23,23 @@ public interface MovieService {
      // updates the info using an id to search the entry
      void update(long id, MovieDTO data) throws Exception;
 
-     // deletes a entry using the id
+     // deletes an entry using the id
      void delete(long id) throws Exception;
 
      // returns the link based on the input word for the online repository using the MDB API
      String getLink(String name);
 
-     // returns the name of the movie based on the input word from the MDB API
-     String getName(String name);
+     // returns all the movie info based on the input word for the online repository using the MDB API
+     String getMovieInfo(String name, String info);
 
-     // returns the year of the movie based on the input word from the MDB API
-     String getYear(String name);
-
-     String getOverview(String name);
 
      // returns the link, the name and the year based on the input word from the MDB API
      List<String> findMovie(String name);
 
      // creates a Movie object and saves it to the repository with all the information based on the input word from the MDB API
      void saveFromName(String name);
+
+
 
 
 }
