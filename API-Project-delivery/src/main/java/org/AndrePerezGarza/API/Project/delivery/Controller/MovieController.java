@@ -59,7 +59,7 @@ public class MovieController {
     @PutMapping("/{id}")
    // @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") long id, @RequestBody MovieDTO data) throws Exception{
-        log.info("Updating by id");
+        log.info("Updating by id: {}", id);
        movie.update(id, data);
     }
 
@@ -87,7 +87,7 @@ public class MovieController {
 
     // Creates a new entry with the info from the Movie DB API searched by the name on the link
     @PostMapping("{name}")
-    public ResponseEntity<Void>  saveMovie(@PathVariable("name") String name){
+    public ResponseEntity<Void> saveMovie(@PathVariable("name") String name){
         log.info("Saving {} into repository", name);
         movie.saveFromName(name);
         return ResponseEntity.created(URI.create("")).build();
