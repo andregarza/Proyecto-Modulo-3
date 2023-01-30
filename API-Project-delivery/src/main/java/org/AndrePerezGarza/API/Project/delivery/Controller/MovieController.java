@@ -80,7 +80,7 @@ public class MovieController {
 
     // Gets the Name of the movie from the Movie DB API searched by the name on the link
     @GetMapping("/get/{name}")
-    public List<String> getMovie(@PathVariable("name") String name){
+    public List<String> getMovie(@PathVariable("name") String name) throws Exception {
         log.info("Getting {} info",name);
         return movie.findMovie(name);
     }

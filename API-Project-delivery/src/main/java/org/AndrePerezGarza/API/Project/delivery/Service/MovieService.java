@@ -34,7 +34,7 @@ public interface MovieService {
 
 
      // returns the link, the name and the year based on the input word from the MDB API
-     List<String> findMovie(String name);
+     List<String> findMovie(String name) throws Exception;
 
      // creates a Movie object and saves it to the repository with all the information based on the input word from the MDB API
      void saveFromName(String name);

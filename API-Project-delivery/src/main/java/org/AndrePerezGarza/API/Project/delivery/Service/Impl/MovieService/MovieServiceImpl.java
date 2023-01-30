@@ -63,7 +63,7 @@ public class MovieServiceImpl implements MovieService {
 
         if (result.isEmpty()) {
             log.warn("Id {} doesnt exist in the Repository", id);
-            throw new Exception("No has visto esa pelicula");
+            throw new Exception("You havent seen this movie");
         }
 
         Movie movie = result.get();
@@ -144,7 +144,7 @@ public class MovieServiceImpl implements MovieService {
             e.printStackTrace();
         }
         log.warn("Error in the request");
-        return "error";
+        return "error in the request";
 
     }
 
@@ -203,15 +203,20 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
-    public List<String> findMovie(String name) {
-        List<String> movie = new ArrayList<>();
-        log.info("Retrieving {} info", name);
-        movie.add("Original title: " + getMovieInfo(name, "original_title"));
-        movie.add("Release Date: " + getMovieInfo(name, "release_date"));
-        movie.add("Link to vidsrc: " + getLink(name));
-        movie.add("Overview: " + getMovieInfo(name, "overview"));
-        log.info("Returning {} info", name);
-        return movie;
+    public List<String> findMovie(String name)  {
+       if(name == null || name == " "){
+        throw new RuntimeException();
+
+     } else {
+            List<String> movie = new ArrayList<>();
+            log.info("Retrieving {} info", name);
+            movie.add("Original title: " + getMovieInfo(name, "original_title"));
+            movie.add("Release Date: " + getMovieInfo(name, "release_date"));
+            movie.add("Link to vidsrc: " + getLink(name));
+            movie.add("Overview: " + getMovieInfo(name, "overview"));
+            log.info("Returning {} info", name);
+            return movie;
+      }
     }
 
 

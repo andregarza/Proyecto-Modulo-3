@@ -175,7 +175,7 @@ class MovieControllerTest {
     // Tests that controller getMovie will call the controller find movie method and return its content
     @Test
     @DisplayName("get Movie Test")
-    void getMovie() {
+    void getMovie() throws Exception {
         List<String> movie = new ArrayList<>();
         given(movieServiceMock.findMovie(anyString())).willReturn(movie);
         assertEquals(movie, movieController.getMovie(""));
@@ -185,7 +185,7 @@ class MovieControllerTest {
     //Will test that if the getMovie method from Service throws an Exception the controller getMovie method also throws an exception
     @Test
     @DisplayName("get Movie Exception Test")
-    void getMovieException() {
+    void getMovieException() throws Exception {
         doThrow(new RuntimeException()).when(movieServiceMock).findMovie(anyString());
 
         assertThrows(RuntimeException.class, () -> {
