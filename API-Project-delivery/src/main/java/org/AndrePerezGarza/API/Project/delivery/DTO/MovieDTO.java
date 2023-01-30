@@ -16,7 +16,7 @@ public class MovieDTO {
     @NotEmpty(message = "The name of the movie can´t be empty")
     private String name;
 
-    @Positive(message = "The name of the movie can´t be empty and needs to be positive")
+    @Positive(message = "The year of the movie can´t be empty and needs to be positive")
     private long year;
 
 

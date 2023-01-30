@@ -58,7 +58,7 @@ public class MovieController {
     // Updates an entry searched by the id and uses the body of the request
     @PutMapping("/{id}")
    // @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") long id, @RequestBody MovieDTO data) throws Exception{
+    public void update(@Valid @PathVariable("id") long id, @RequestBody MovieDTO data) throws Exception{
         log.info("Updating by id: {}", id);
        movie.update(id, data);
     }
