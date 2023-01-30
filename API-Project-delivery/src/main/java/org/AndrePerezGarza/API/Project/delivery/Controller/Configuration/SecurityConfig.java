@@ -1,6 +1,8 @@
 package org.AndrePerezGarza.API.Project.delivery.Controller.Configuration;
 
 
+import org.AndrePerezGarza.API.Project.delivery.Controller.Handlers.AccessDeniedHandler;
+import org.AndrePerezGarza.API.Project.delivery.Controller.Handlers.AuthenticationEntryPointHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
